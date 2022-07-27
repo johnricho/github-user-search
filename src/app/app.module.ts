@@ -1,18 +1,34 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { BrowserModule } from '@angular/platform-browser';
+import { RequestInterceptor } from './helpers/request-interceptor';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { SearchBoxComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SearchBoxComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
-  providers: [],
+  exports: [BrowserModule,NgxPaginationModule],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  providers: [
+     { 
+      provide: HTTP_INTERCEPTORS,
+      useClass:RequestInterceptor, 
+      multi:true
+    },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
