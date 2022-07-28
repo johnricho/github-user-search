@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { merge, Observable, ReplaySubject, throwError, EMPTY} from 'rxjs';
-import { retry, catchError, map } from 'rxjs/operators';
+import { Observable, EMPTY, shareReplay, map, retry, catchError, throwError, tap} from 'rxjs';
+import { Result } from 'src/app/models/result';
+import { Results } from 'src/app/models/results';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,10 +22,18 @@ export class SearchService {
    *
    * @param query
    */
-  search(query?:string): Observable<any> {
+  search(query?:string, count: number = 100): Observable<Results> {
     if(query=='' || query == null){
       return EMPTY;
     }
-    return this.http.get<any>(this.url + query);
+
+    return this.http.get<Results>(this.url + query,{params: {per_page: count}}).pipe(
+      map((data: Results) => ({
+        items: data.items.map((result: Result)=> ({
+        url: result.url
+      })),
+    })));
+
   }
+  
 }

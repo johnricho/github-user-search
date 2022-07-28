@@ -4,13 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RequestInterceptor } from './helpers/request-interceptor';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { SearchBoxComponent } from './components/home/home.component';
+import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBoxComponent,
+    HomeComponent,
     HeaderComponent
   ],
   imports: [

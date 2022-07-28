@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   url: 'https://api.github.com/search/users?q=',
-  key: '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'
+  key: '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'
 };
 
 /*
