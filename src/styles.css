@@ -10,13 +10,14 @@ body {
     padding-top: 56px;
 }
 
+.search-result#search-result ul,
+.search-result#search-result nav ul,
+.search-result#search-result nav ul.ngx-pagination {
+    padding-left: 0 !important;
+    /* margin-left: -40px !important; */
+}
+
 @media (max-width: 991.98px) {
-    .search-result#search-result ul,
-    .search-result#search-result nav ul,
-    .search-result#search-result nav ul.ngx-pagination {
-        padding-left: 0 !important;
-        /* margin-left: -40px !important; */
-    }
     .search-data {
         text-align: center !important;
     }

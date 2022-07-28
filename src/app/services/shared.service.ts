@@ -21,14 +21,23 @@ export class SharedService {
    *
    * @param User
    */
-  setUserData(data: User[]): void {
+   setUserData(data: User[]): void {
     this.users.next(data);
+  }
+
+  /**
+   * set data for users observable
+   *
+   * @param User
+   */
+  clearUserData(): void {
+    this.users.next([]);
   }
 
   /**
    * get users observable data
    */
-  getUserData(): Observable<any> {
+  getUserData(): Observable<User[]> {
     return this.users.asObservable();
   }  
 
@@ -93,6 +102,22 @@ export class SharedService {
    * @param message
    */
   setSearching(message: string): void {
+    this.message.next(message);
+  }
+
+  /**
+   * watch error and sync error from service
+   */
+  error(): Observable<string> {
+    return this.message.asObservable();
+  }
+  
+  /**
+   * set error message for observable
+   *
+   * @param message
+   */
+  setError(message: string): void {
     this.message.next(message);
   }
 

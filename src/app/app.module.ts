@@ -6,6 +6,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ErrorInterceptor } from './helpers/error-interceptor';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -14,20 +16,18 @@ import { HeaderComponent } from './components/header/header.component';
     HeaderComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
-  exports: [BrowserModule,NgxPaginationModule],
+  exports: [BrowserModule,NgxPaginationModule,RouterModule],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
-     { 
-      provide: HTTP_INTERCEPTORS,
-      useClass:RequestInterceptor, 
-      multi:true
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true  },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     ],
   bootstrap: [AppComponent]
 })

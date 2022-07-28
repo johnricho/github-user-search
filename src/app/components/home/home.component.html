@@ -53,7 +53,7 @@
 
         <ng-template #norecord>
             <div class="no_record text-center" *ngIf="searching">
-                <div class="d-inline-flex lead text-center py-5 my-5">
+                <div class="d-inline-flex lead text-center py-5 my-5" *ngIf="result > 0">
                     <div class="spinner-border text-secondary mx-2">
                         <span class="sr-only"></span>
                     </div>
@@ -70,8 +70,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="no_record" *ngIf="!searching">
-                    <p class="lead text-center">{{loading}} Messagessdsd</p>
+                <div class="no_record text-center" *ngIf="result == 0">
+                    <p class="lead text-center">{{loading}}</p>
                 </div>
             </div>
         </ng-template>

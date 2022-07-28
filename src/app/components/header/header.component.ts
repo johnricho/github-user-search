@@ -16,7 +16,6 @@ import { Results } from 'src/app/models/results';
 })
 export class HeaderComponent implements AfterViewInit {
   
-  private users: User[] = [];
   private searching: boolean = false;
 
   searchSubcription!: Subscription;
@@ -49,14 +48,17 @@ export class HeaderComponent implements AfterViewInit {
       distinctUntilChanged(),
       switchMap(val => this.github.search(val))).subscribe(data => {
         this.searching = true;
+        let users: User[] = [];
+        this.sharedService.clearUserData();
         this.sharedService.setSearchStatus(true);
         //set action status on observable for user feedback
-        this.sharedService.setSearching('Searching user...');
+        this.sharedService.setSearching('Searching user');
         //set search field value on observable
         this.sharedService.setSearchQuery(this.search.nativeElement.value);
         // check if search query match any data
         if(data.items.length == 0) {
           //if no record, update the searching state observable to change status message in real time
+          this.sharedService.clearUserData();
           this.sharedService.setSearching('No record found for your query!');
         }
         //pass search result data to observable
@@ -64,11 +66,21 @@ export class HeaderComponent implements AfterViewInit {
         //count result and fetch user profile from search result
         data.items.forEach((result: Result) => {
           this.user.profile(result).subscribe((user: User) => {
-            this.users.push(user);
+            users.push(user);
+          },(error: any) => {
+            console.log('User Error Interceptor ', error)
+             //Handle the error here
+             //If not handled, then throw it
+             throw error; 
           });
         });
         //pass user data to observable
-        this.sharedService.setUserData(this.users);
+        this.sharedService.setUserData(users);
+      },(error: any) => {
+        console.log('Search Error Interceptor ', error)
+         //Handle the error here
+         //If not handled, then throw it
+         throw error; 
       }
     );
   }

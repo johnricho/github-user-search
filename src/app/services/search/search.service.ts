@@ -32,7 +32,9 @@ export class SearchService {
         items: data.items.map((result: Result)=> ({
         url: result.url
       })),
-    })));
+    })),(error: any) => {
+       throw error; 
+    });
 
   }
   

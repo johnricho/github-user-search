@@ -52,7 +52,9 @@ export class UserService {
         repos_url: data.repos_url,
         avatar_url: data.avatar_url,
         created_at: data.created_at
-    })));
+    })),(error: any) => {
+      throw error; 
+   });
   }
 
 }
