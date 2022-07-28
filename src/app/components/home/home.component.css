@@ -40,25 +40,6 @@
 }
 
 @media (max-width: 1024px) {
-    .search-result#search-result nav ul,
-    .ngx-pagination,
-    nav .ngx-pagination,
-    nav ul.ngx-pagination {
-        padding-left: 0 !important;
-        margin-left: -40px !important;
-    }
-    .search-result#search-result ul,
-    .search-result#search-result nav ul,
-    .search-result#search-result nav ul.ngx-pagination {
-        padding-left: 0 !important;
-        margin-left: -40px !important;
-    }
-    .search-data {
-        text-align: center !important;
-    }
-}
-
-@media only screen and (min-width: 1024px) {
     .search-result#search-result ul,
     .search-result#search-result nav ul,
     .search-result#search-result nav ul.ngx-pagination {
