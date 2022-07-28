@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   public query: string = '';
   public result: number = 0;
   public current: number = 0;
-  public perPage: number = 7;
+  public perPage: number = 10;
   public loading: string = '';
   public searching:boolean = false;
   

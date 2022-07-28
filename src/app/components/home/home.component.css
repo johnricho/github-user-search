@@ -24,3 +24,48 @@
     padding-right: 10px !important;
     margin: auto !important;
 }
+
+.spinner-wrapper {
+    padding: 10px 0px !important;
+    padding-top: 17px !important;
+}
+
+.spinner-dot {
+    width: 4px !important;
+    height: 4px !important;
+}
+
+.search-data {
+    text-align: right !important;
+}
+
+@media (max-width: 1024px) {
+    .search-result#search-result nav ul,
+    .ngx-pagination,
+    nav .ngx-pagination,
+    nav ul.ngx-pagination {
+        padding-left: 0 !important;
+        margin-left: -40px !important;
+    }
+    .search-result#search-result ul,
+    .search-result#search-result nav ul,
+    .search-result#search-result nav ul.ngx-pagination {
+        padding-left: 0 !important;
+        margin-left: -40px !important;
+    }
+    .search-data {
+        text-align: center !important;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .search-result#search-result ul,
+    .search-result#search-result nav ul,
+    .search-result#search-result nav ul.ngx-pagination {
+        padding-left: 0 !important;
+        margin-left: -40px !important;
+    }
+    .search-data {
+        text-align: center !important;
+    }
+}

@@ -1,63 +1,79 @@
 <main class="container">
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="p-3 bg-body rounded shadow-sm">
         <div class="d-flex justify-content-between border-bottom border-warning">
             <h6 class="pb-2 mb-0">Search Result for: {{query}}</h6>
 
             <div class="search-data">
-                <h6 class="pb-2 mb-0">Showing: {{from}} to {{current}} of {{result}} results</h6>
+                <p class="pb-2 mb-0">Showing: {{from}} to {{current}} of {{result}}</p>
             </div>
         </div>
 
         <div *ngIf="!query || !searching">
-            <div class="no_record">
+            <div class="no_record text-center">
                 <p class="lead text-center">Welcome, please enter query to filter Github users</p>
             </div>
         </div>
+    </div>
 
-        <div *ngIf="query">
-            <ng-container *ngIf="users && users.length > 0; else norecord">
-                <div *ngFor="let user of users  | paginate: { id: 'search-result',itemsPerPage: perPage,currentPage: page, totalItems: users.length }; let i = index">
-                    <div class="d-flex text-muted pt-3">
-                        <div class="bd-placeholder-img flex-shrink-0 me-2 rounded user-avatar pr-4" width="32" height="32">
-                            <img src="{{user.avatar_url}}" class="avatar img-fluid rounded-start mx-auto" alt=" profile pictures">
-                        </div>
-                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                            <div class="d-flex justify-content-between">
-                                <a href="{{user.html_url}}" target="_blank"><strong class="username" ng-if="!user.name; else username">{{user.login }}</strong></a>
-                                <ng-template #username>
-                                    <a href="{{user.html_url}}" target="_blank"><strong class="username">{{user.name}}</strong></a>
-                                </ng-template>
-                                <div class="user-summary">
-                                    <a href="{{user.html_url}}" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/visible--v1.png" title="{{user.name}}" /></a>
-                                </div>
+    <div class="px-3 bg-white" *ngIf="query">
+        <ng-container *ngIf="users && users.length > 0; else norecord">
+            <div *ngFor="let user of users  | paginate: { id: 'search-result',itemsPerPage: perPage,currentPage: page, totalItems: users.length }; let i = index">
+                <div class="d-flex text-muted pt-3">
+                    <div class="bd-placeholder-img flex-shrink-0 me-2 rounded user-avatar pr-4" width="32" height="32">
+                        <img src="{{user.avatar_url}}" class="avatar img-fluid rounded-start mx-auto" alt=" profile pictures">
+                    </div>
+                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{user.html_url}}" target="_blank"><strong class="username" ng-if="!user.name; else username">{{user.login }}</strong></a>
+                            <ng-template #username>
+                                <a href="{{user.html_url}}" target="_blank"><strong class="username">{{user.name}}</strong></a>
+                            </ng-template>
+                            <div class="user-summary">
+                                <a href="{{user.html_url}}" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/visible--v1.png" title="{{user.name}}" /></a>
                             </div>
-                            <span class="d-block py-1">{{user.bio}}</span>
-                            <span class="badge bg-info rounded-pill">Followers: {{user.followers | number}}</span>
-                            <span class="badge bg-warning mx-2 rounded-pill">Following: {{user.following | number}}</span>
+                        </div>
+                        <span class="d-block py-1">{{user.bio}}</span>
+                        <span class="badge bg-info rounded-pill">Followers: {{user.followers | number}}</span>
+                        <span class="badge bg-warning mx-2 rounded-pill">Following: {{user.following | number}}</span>
 
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="users && users.length > 0; else norecord" class="pt-3 row">
+                <div class="pb-2 mb-0 col-md-6 col-sm-12 px-2">
+                    <pagination-controls class="search-result" id="search-result" (pageChange)="pageChanged($event)" (pageBoundsCorrection)="pageChanged($event)" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"></pagination-controls>
+                </div>
+
+                <div class="search-data col-md-6 col-sm-12 text-right">
+                    <p class="pb-2 mb-0 text-right px-2">Showing: {{from}} to {{current}} of {{result}}</p>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #norecord>
+            <div class="no_record text-center" *ngIf="searching">
+                <div class="d-inline-flex lead text-center py-5 my-5">
+                    <div class="spinner-border text-secondary mx-2">
+                        <span class="sr-only"></span>
+                    </div>
+                    <span class="lead mx-1">{{loading}}</span>
+                    <div class="d-inline-flex lead text-center spinner-wrapper">
+                        <div class="spinner-dot spinner-grow text-info" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                        <div class="spinner-dot spinner-grow text-warning" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                        <div class="spinner-dot spinner-grow text-danger" role="status">
+                            <span class="sr-only"></span>
                         </div>
                     </div>
-                </div>
-
-                <div *ngIf="users && users.length > 0; else norecord" class="pt-3 d-flex justify-content-between">
-                    <div class="pb-2 mb-0">
-                        <pagination-controls id="search-result" (pageChange)="pageChanged($event)" (pageBoundsCorrection)="pageChanged($event)" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
-                    </div>
-
-                    <div class="search-data">
-                        <h6 class="pb-2 mb-0">Showing: {{current}} of {{result}} results</h6>
-                    </div>
-                </div>
-            </ng-container>
-
-            <ng-template #norecord>
-                <div class="no_record" *ngIf="searching">
-                    <p class="lead text-center">{{loading}}...</p>
                 </div>
                 <div class="no_record" *ngIf="!searching">
                     <p class="lead text-center">{{loading}} Messagessdsd</p>
                 </div>
-            </ng-template>
-        </div>
+            </div>
+        </ng-template>
     </div>
 </main>
